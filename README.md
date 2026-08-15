@@ -56,7 +56,7 @@ android.aapt2=/data/data/com.termux/files/usr/bin/aapt2
 
 ```bash
 # 1. Clone
-git clone https://github.com/<you>/kotlinagrad.git
+git clone https://github.com/ZarShevak/kotlinagrad.git
 cd kotlinagrad
 
 # 2. Put the wrapper on PATH (or run it directly)
