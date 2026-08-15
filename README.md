@@ -43,8 +43,9 @@ the system libraries, so the real Perfetto JNI library is never invoked.
 
 ### 2. Native aarch64 AAPT2
 
-Compiled from AOSP `android-17.0.0_r1` (see `patches/`), installed to
-`$PREFIX/bin/aapt2`. Point AGP at it in `gradle.properties`:
+Prebuilt aarch64 binary in `bin/aapt2` (AAPT2 `2.20-android-17.0.0_r1`),
+compiled from AOSP `android-17.0.0_r1` (see `patches/`). Point AGP at it in
+`gradle.properties`:
 
 ```properties
 android.aapt2=/data/data/com.termux/files/usr/bin/aapt2
@@ -59,11 +60,12 @@ android.aapt2=/data/data/com.termux/files/usr/bin/aapt2
 git clone https://github.com/ZarShevak/kotlinagrad.git
 cd kotlinagrad
 
-# 2. Put the wrapper on PATH (or run it directly)
-ln -s "$PWD/kotlinagrad" "$PREFIX/bin/kotlinagrad"
+# 2. One-shot install (aapt2 + stub + wrapper)
+bash install.sh
 
-# 3. (Optional) Install the stub system-wide so LD_LIBRARY_PATH is not needed
-cp stub-libs/libperfetto_framework_jni.so "$PREFIX/lib/"
+# (Manual alternative)
+#   ln -s "$PWD/kotlinagrad" "$PREFIX/bin/kotlinagrad"
+#   cp stub-libs/libperfetto_framework_jni.so "$PREFIX/lib/"
 ```
 
 ## Usage
@@ -112,6 +114,9 @@ with a recent NDK/CMake. The build harness is
 ```
 kotlinagrad/
 ├── kotlinagrad                     # wrapper script
+├── install.sh                      # one-shot installer
+├── bin/
+│   └── aapt2                       # prebuilt aarch64 binary
 ├── stub-libs/
 │   ├── stub_perfetto.c             # stub source
 │   └── libperfetto_framework_jni.so  # compiled aarch64
