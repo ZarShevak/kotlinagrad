@@ -1,0 +1,35 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# ⚡ kotlinagrad — Native Android Gradle wrapper for Termux aarch64
+# Élimine le besoin de proot-distro pour les builds Kotlin/AGP.
+#
+# Usage: kotlinagrad [gradle args...]
+#   kotlinagrad assembleDebug
+#   kotlinagrad --version
+#   kotlinagrad --stop
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STUB_DIR="${SCRIPT_DIR}/stub-libs"
+STUB_FILE="${STUB_DIR}/libperfetto_framework_jni.so"
+
+# Vérifier que le stub existe
+if [ ! -f "$STUB_FILE" ]; then
+    echo "❌ Stub manquant: $STUB_FILE"
+    echo "   Recompiler avec: clang -shared -fPIC -o libperfetto_framework_jni.so stub_perfetto.c \\"
+    echo "                    -I\$JAVA_HOME/include -I\$JAVA_HOME/include/linux \\"
+    echo "                    -Wl,-soname,libperfetto_framework_jni.so"
+    exit 1
+fi
+
+# Vérifier que gradlew existe dans le répertoire courant
+if [ ! -f "./gradlew" ]; then
+    echo "❌ Pas de gradlew dans le répertoire courant ($PWD)"
+    echo "   Lancer depuis la racine d'un projet Android/Gradle."
+    exit 1
+fi
+
+# Priorité au stub sur les libs système
+export LD_LIBRARY_PATH="${STUB_DIR}:${LD_LIBRARY_PATH:-}"
+
+exec ./gradlew "$@"

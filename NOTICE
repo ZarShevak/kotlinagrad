@@ -1,0 +1,20 @@
+KotlinAГРАД (kotlinagrad) — Third-party attributions
+======================================================
+
+AAPT2 natif aarch64 / Native aarch64 AAPT2
+------------------------------------------
+The native aarch64 AAPT2 binary is compiled from AOSP android-17.0.0_r1
+using termux/android-build-tools (https://github.com/termux/android-build-tools).
+
+  - Upstream build harness: https://github.com/termux/android-build-tools
+  - AOSP source: https://android.googlesource.com/platform/frameworks/base
+  - License: Apache License, Version 2.0 (see native-build/LICENSE.txt)
+
+The patch files under patches/ target the AOSP sources listed above and
+inherit the Apache-2.0 license of the sources they modify. Each patch is
+a minimal fix for compiling AOSP on aarch64 with a recent NDK/CMake.
+
+AOSP is Copyright (C) The Android Open Source Project, licensed under the
+Apache License, Version 2.0:
+
+    https://www.apache.org/licenses/LICENSE-2.0

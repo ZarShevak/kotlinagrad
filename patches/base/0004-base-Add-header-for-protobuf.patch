@@ -1,0 +1,26 @@
+From 29cf20b972ab43258403950ba2c26576fbd2a64b Mon Sep 17 00:00:00 2001
+From: Biswapriyo Nath <nathbappai@gmail.com>
+Date: Wed, 1 Jan 2025 00:00:00 +0000
+Subject: [PATCH] base: Add header for protobuf
+
+Fixes: Dump.cpp:85:27: error: 'FileInputStream' is not a member of 'google::protobuf::io'
+---
+ tools/aapt2/cmd/Dump.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tools/aapt2/cmd/Dump.cpp b/tools/aapt2/cmd/Dump.cpp
+index 98b46d9c0710..5af996354c6f 100644
+--- a/tools/aapt2/cmd/Dump.cpp
++++ b/tools/aapt2/cmd/Dump.cpp
+@@ -19,6 +19,8 @@
+ #include <cinttypes>
+ #include <vector>
+ 
++#include <google/protobuf/io/zero_copy_stream_impl.h>
++
+ #include "Debug.h"
+ #include "Diagnostics.h"
+ #include "LoadedApk.h"
+-- 
+2.54.0
+

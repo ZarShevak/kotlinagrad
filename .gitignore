@@ -1,0 +1,15 @@
+# Third-party working clone (termux/android-build-tools) — not part of this repo
+native-build/
+
+# Build artifacts (root-level only — must not match patches/build/)
+/build/
+*.apk
+*.jar
+aapt2-original.jar
+.gradle/
+gradle-user-home/
+
+# Editor / OS
+.DS_Store
+*.swp
+*~

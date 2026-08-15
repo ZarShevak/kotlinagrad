@@ -1,0 +1,42 @@
+From 2ec75f1d098e35b37fcda15962dd02bb2eb85c73 Mon Sep 17 00:00:00 2001
+From: Biswapriyo Nath <nathbappai@gmail.com>
+Date: Wed, 1 Jan 2025 00:00:00 +0000
+Subject: [PATCH] aidl: Fix ambiguous dump_location function
+
+Fixes:
+generate_aidl_mappings.cpp:48:48: error: call of overloaded 'dump_location(AidlMethod&)' is ambiguous
+generate_java.cpp:979:72: error: call of overloaded 'dump_location(const AidlAnnotation&)' is ambiguous
+---
+ generate_aidl_mappings.cpp | 2 +-
+ generate_java.cpp          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/generate_aidl_mappings.cpp b/generate_aidl_mappings.cpp
+index 8acd85cc1f51..d1e9c8a999e9 100644
+--- a/generate_aidl_mappings.cpp
++++ b/generate_aidl_mappings.cpp
+@@ -45,7 +45,7 @@ SignatureMap generate_mappings(const AidlDefinedType* defined_type) {
+       }
+       signature << "|";
+       signature << java::JavaSignatureOf(method->GetType());
+-      mappings[signature.str()] = dump_location(*method);
++      mappings[signature.str()] = android::aidl::mappings::dump_location(*method);
+     }
+   }
+   return mappings;
+diff --git a/generate_java.cpp b/generate_java.cpp
+index 4263c11531a3..0f6c580c6e09 100644
+--- a/generate_java.cpp
++++ b/generate_java.cpp
+@@ -976,7 +976,7 @@ std::string GenerateJavaUnsupportedAppUsageParameters(const AidlAnnotation& a) {
+     const std::string& param_value = name_and_param.second;
+     parameters_decl.push_back(param_name + " = " + param_value);
+   }
+-  parameters_decl.push_back("overrideSourcePosition=\"" + dump_location(a) + "\"");
++  parameters_decl.push_back("overrideSourcePosition=\"" + android::aidl::java::dump_location(a) + "\"");
+   return "(" + Join(parameters_decl, ", ") + ")";
+ }
+ 
+-- 
+2.54.0
+
