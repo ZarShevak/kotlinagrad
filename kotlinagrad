@@ -9,7 +9,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT")" && pwd)"
 STUB_DIR="${SCRIPT_DIR}/stub-libs"
 STUB_FILE="${STUB_DIR}/libperfetto_framework_jni.so"
 
